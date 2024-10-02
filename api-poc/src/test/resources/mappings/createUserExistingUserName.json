@@ -1,0 +1,32 @@
+{
+    "request":{
+       "method":"POST",
+       "url":"/openidm/managed/alpha_user?_action=create",
+       "bodyPatterns":[
+          {
+             "matchesJsonPath":"$[?(@.userName == 'not_joe@example.com')]"
+          }
+       ]
+    },
+    "response":{
+       "status":403,
+       "jsonBody":{
+          "code":403,
+          "reason":"Forbidden",
+          "message":"Policy validation failed",
+          "detail":{
+             "result":false,
+             "failedPolicyRequirements":[
+                {
+                   "policyRequirements":[
+                      {
+                         "policyRequirement":"VALID_USERNAME"
+                      }
+                   ],
+                   "property":"userName"
+                }
+             ]
+          }
+       }
+    }
+ }

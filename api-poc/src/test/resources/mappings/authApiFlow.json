@@ -1,29 +1,9 @@
 {
-    "request": {
-      "method": "POST",
-      "url": "/oauth2/access_token",
-      "bodyPatterns": [
-        {
-          "matchesJsonPath": "$.grant_type"
-        },
-        {
-          "matchesJsonPath": "$.username"
-        },
-        {
-          "matchesJsonPath": "$[?(@.password == 'password123')]"
-        }
-      ]
-    },
-  
-    "response": {
-      "status": 200,
-      "jsonBody": {
-        "message" : "User registered successfully",
-        "authToken" : "abc123def"
-      },
-      "headers": {
-          "Content-Type": "application/json"
-      }
-    }
+  "request": {
+    "url": "/oauth2/access_token",
+    "method": "POST"
+  },
+  "response": {
+    "transformers": ["access-token-stub-response"]
   }
-  
+}

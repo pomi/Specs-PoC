@@ -6,20 +6,22 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.responses.AccessTokenResponse;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class CustomerCreateTest {
+public class AccessTokenTest {
 
     private final static String HOST = "localhost";
     private final static String PORT = "8080";
@@ -32,7 +34,7 @@ public class CustomerCreateTest {
     @BeforeAll
     public void setUp() {
         
-        wireMockServer = new WireMockServer(Integer.parseInt(PORT));
+        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().extensions(AccessTokenResponse.class));
         wireMockServer.start();
         configureFor(HOST, Integer.parseInt(PORT));
     }
@@ -43,13 +45,13 @@ public class CustomerCreateTest {
     }
 
     @Test
+    @Tag("happy-path")
     public void verifyAccessTokenIsGranted() {
         
         Map<String, Object> jsonBody = new HashMap<>();
         jsonBody.put("grant_type", "password");
-        jsonBody.put("username", "testuser");
+        jsonBody.put("username", "user123");
         jsonBody.put("password", "password123");
-
 
         Response response = RestAssured.given()
             .baseUri(BASE_URI)
@@ -64,13 +66,41 @@ public class CustomerCreateTest {
     }
 
     @Test
-    public void verifyWrongPasswordFailure() {
+    @Tag("error-path")
+    @Tag("unsupported-media")
+    public void verifyWrongMediaTypeFailure() {
+
+        Response response = RestAssured.given()
+            .baseUri(BASE_URI)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .post(ACCESS_TOKEN_ENDPOINT);
+
+        assertEquals(415, response.getStatusCode());
+    }
+
+    @Test
+    @Tag("error-path")
+    @Tag("empty-request-body")
+    public void verifyEmptyRequestBodyFailure() {
+
+        Response response = RestAssured.given()
+            .baseUri(BASE_URI)
+            .header("Content-Type", "application/json")
+            .body("")
+            .post(ACCESS_TOKEN_ENDPOINT);
+
+        assertEquals(400, response.getStatusCode());
+    }
+
+    @Test
+    @Tag("error-path")
+    @Tag("wrong-password")
+    public void verifyWrongCredentialsFailure() {
         
         Map<String, Object> jsonBody = new HashMap<>();
         jsonBody.put("grant_type", "password");
         jsonBody.put("username", "testuser");
         jsonBody.put("password", "wrong_password");
-
 
         Response response = RestAssured.given()
             .baseUri(BASE_URI)
@@ -78,7 +108,6 @@ public class CustomerCreateTest {
             .body(jsonBody)
             .post(ACCESS_TOKEN_ENDPOINT);
 
-        assertTrue(response.getStatusCode() >= 400);
-    }
-    
+        assertEquals(401, response.getStatusCode());
+    } 
 }

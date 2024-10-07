@@ -1,0 +1,118 @@
+{
+    "request":{
+       "method":"POST",
+       "url":"/openidm/managed/alpha_user?_action=create",
+       "bodyPatterns":[
+          {
+             "matchesJsonPath":"$[?(@.userName == 'joe@example.com')]",
+             "matchesJsonPath":"$[?(@.sn == 'Bloggs')]",
+             "matchesJsonPath":"$[?(@.givenName == 'Joe')]",
+             "matchesJsonPath":"$[?(@.mail == 'joe2@example.com')]",
+             "matchesJsonPath":"$[?(@.password == 'Password1!')]",
+             "matchesJsonPath":"$[?(@.telephoneNumber == '01234567890')]",
+             "matchesJsonPath":"$[?(@.frUnindexedString1 == 'Mr')]",
+             "matchesJsonPath":"$[?(@.frIndexedDate1 == '1980-01-01T00:00:00Z')]"
+          }
+       ]
+    },
+    "response":{
+       "status":200,
+       "jsonBody":{
+          "_id":"06765183-d8ea-4be1-999f-ada2f18d0dd5",
+          "_rev":"402103c6-8faa-4e4b-9a01-6f357a54c705-46705",
+          "country":null,
+          "frUnindexedString1":"Mr",
+          "mail":"joe@example.com",
+          "memberOfOrgIDs":null,
+          "frIndexedDate5":null,
+          "frUnindexedString2":"Male",
+          "assignedDashboard":null,
+          "frIndexedDate4":null,
+          "frUnindexedString3":null,
+          "frIndexedDate3":null,
+          "frUnindexedString4":null,
+          "postalCode":null,
+          "frUnindexedString5":null,
+          "profileImage":null,
+          "frIndexedString5":null,
+          "frIndexedString4":null,
+          "frIndexedString3":null,
+          "frIndexedString2":null,
+          "frIndexedString1":null,
+          "frIndexedMultivalued3":[
+             
+          ],
+          "frUnindexedInteger5":null,
+          "consentedMappings":[
+             
+          ],
+          "frIndexedMultivalued4":[
+             
+          ],
+          "frUnindexedInteger4":null,
+          "frIndexedMultivalued5":[
+             
+          ],
+          "frUnindexedInteger3":null,
+          "frUnindexedInteger2":null,
+          "frIndexedMultivalued1":[
+             
+          ],
+          "frIndexedMultivalued2":[
+             
+          ],
+          "frUnindexedInteger1":null,
+          "givenName":"Joe",
+          "stateProvince":null,
+          "postalAddress":null,
+          "telephoneNumber":"01234567890",
+          "city":null,
+          "displayName":null,
+          "effectiveAssignments":[
+             
+          ],
+          "description":null,
+          "accountStatus":"active",
+          "frUnindexedDate3":null,
+          "frUnindexedMultivalued1":[
+             
+          ],
+          "frUnindexedDate2":"2024-04-15T09:04:16Z",
+          "frUnindexedDate5":null,
+          "frUnindexedMultivalued3":[
+             
+          ],
+          "frUnindexedDate4":null,
+          "frUnindexedMultivalued2":[
+             
+          ],
+          "aliasList":[
+             
+          ],
+          "frUnindexedMultivalued5":[
+             
+          ],
+          "frUnindexedMultivalued4":[
+             
+          ],
+          "kbaInfo":[
+             
+          ],
+          "frIndexedInteger4":null,
+          "frIndexedInteger3":null,
+          "frIndexedInteger2":null,
+          "isMemberOf":null,
+          "frIndexedInteger1":null,
+          "sn":"Bloggs",
+          "frUnindexedDate1":null,
+          "frIndexedInteger5":null,
+          "preferences":null,
+          "userName":"joe@example.com",
+          "frIndexedDate2":null,
+          "frIndexedDate1":"1980-01-01T00:00:00Z",
+          "effectiveRoles":[
+             
+          ]
+       }
+    }
+ }
